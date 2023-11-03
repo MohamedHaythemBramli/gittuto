@@ -2,6 +2,7 @@ package com.example.gittuto;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class PersonManipulation {
@@ -14,13 +15,20 @@ public class PersonManipulation {
 //            System.out.println(person.getAge());
 //        });
         //persons.stream().filter(person -> person.getAge()>37).forEach(System.out::println);
-        persons.stream().filter(person -> person.getName().startsWith("H")
-                && (person.getEmail().equals("gmail")||(person.getEmail().equals("hotmail")))).forEach(System.out::println);
+        Predicate<Person> stringPredicate = person -> {
+            return person.getName().startsWith("H") && (person.getEmail().equals("gmail")||person.getEmail().equals("hotmail"));
+        };
+        persons.stream().filter(stringPredicate).forEach(System.out::println);
 //       persons.stream().collect(Collectors.toMap(Person::getId, person -> person)).entrySet().forEach(integerPersonEntry ->{
 //           System.out.println("Person id " + integerPersonEntry.getKey() +
 //                   " Person Name "+ integerPersonEntry.getValue().getName()
 //           +" Person Age "+integerPersonEntry.getValue().getAge());
 //       });
 
+    }
+
+    private static boolean test(Person person) {
+        return person.getName().startsWith("H")
+                && (person.getEmail().equals("gmail") || (person.getEmail().equals("hotmail")));
     }
 }
